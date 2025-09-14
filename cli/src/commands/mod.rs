@@ -32,6 +32,7 @@ mod file;
 mod fix;
 #[cfg(feature = "git")]
 mod git;
+mod github;
 mod help;
 mod interdiff;
 mod log;
@@ -119,6 +120,8 @@ enum Command {
     #[cfg(feature = "git")]
     #[command(subcommand)]
     Git(git::GitCommand),
+    #[command(subcommand)]
+    GitHub(github::GitHubCommand),
     Help(help::HelpArgs),
     Interdiff(interdiff::InterdiffArgs),
     Log(log::LogArgs),
@@ -186,6 +189,7 @@ pub fn run_command(ui: &mut Ui, command_helper: &CommandHelper) -> Result<(), Co
         Command::Fix(args) => fix::cmd_fix(ui, command_helper, args),
         #[cfg(feature = "git")]
         Command::Git(args) => git::cmd_git(ui, command_helper, args),
+        Command::GitHub(args) => github::cmd_github(ui, command_helper, args),
         Command::Help(args) => help::cmd_help(ui, command_helper, args),
         Command::Interdiff(args) => interdiff::cmd_interdiff(ui, command_helper, args),
         Command::Log(args) => log::cmd_log(ui, command_helper, args),
